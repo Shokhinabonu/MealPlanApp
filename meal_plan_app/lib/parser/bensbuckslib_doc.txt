@@ -1,0 +1,23 @@
+#THIS IS INCOMPLETE, AND WILL BE FINISHED LATER
+
+Documentation for bensbuckslib.dart:
+
+Overview:
+    - Create an instance of BensBucks and pass a function that will be called every time a request is complete
+    - Make requests!
+
+Class/Enum Overview:
+    - BensBucks: Holds the main methods for interacting with the Ben's Bucks API
+    - BensBucksRequestType: Holds the type of request made
+        - login: Log into the Ben's Bucks service
+        - storedCredentialsCheck: Check if credentials are stored
+    - BensBucksError: Holds the type of error returned from a request
+        - noError: Everything went well, no problems here!
+        - connectionError: Either an error occurred with the user's internet connection, or the Ben's bucks site was unreachable or returned an unparsable response
+        - invalidCredentialsError: The provided credentials were invalid
+        - noStoredCredentialsError: There are no credentials saved in secure storage
+
+Function Overview:
+    - Default Constructor: Creates an instance of BensBucks and calls the provided function with a map every time a request is made.
+    - currentlyLoggedIn: Returns true if the user is already logged in, returns false if not. NOTE: This is not a request, the function itself instantly returns the value
+    - checkIfCredentialsStored: Checks if there is a stored username/password combo, see the 
