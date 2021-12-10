@@ -1,17 +1,132 @@
 import 'package:flutter/material.dart';
 import 'package:meal_plan_app/screens/plan_detail/plan_detail.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   // TODO: Implement
   @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  var rememberMeValue = false;
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Center(
-            child: ElevatedButton(
-                onPressed: () => {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => PlanDetail()))
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 40),
+                  child: Text(
+                    'Log In',
+                    style: TextStyle(
+                        fontSize: 36,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w400),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black, width: 3.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black, width: 3.0),
+                      ),
+                      hintText: "Enter You Email",
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black, width: 3.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black, width: 3.0),
+                      ),
+                      hintText: "Enter You Password",
+                    ),
+                  ),
+                ),
+                Container(
+                  width: double.infinity,
+                  margin: EdgeInsets.symmetric(vertical: 10),
+                  child: OutlinedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/Home');
                     },
-                child: Text("Login"))));
+                    child: Text(
+                      'LOG IN',
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: Colors.white,
+                        //fontWeight: FontWeight.w900
+                      ),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(5))),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 43, vertical: 20),
+                      side: BorderSide(
+                        color: Colors.black,
+                        width: 3,
+                      ),
+                    ),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          child: Text(
+                            'Remember Me',
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                        Checkbox(
+                          value: rememberMeValue,
+                          onChanged: (val) {
+                            setState(() {
+                              rememberMeValue = val!;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                    const Text(
+                      'Forgot Password',
+                      style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ]),
+      ),
+    );
   }
 }
+
