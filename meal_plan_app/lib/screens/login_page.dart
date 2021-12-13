@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:meal_plan_app/parser/bensbuckslib.dart';
 import 'package:meal_plan_app/screens/plan_detail/plan_detail.dart';
+import 'package:meal_plan_app/parser/bensbuckslib.dart';
 
 class LoginPage extends StatefulWidget {
   // TODO: Implement
@@ -8,9 +10,37 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  var userName;
+  var password;
   var rememberMeValue = false;
+  final userNameController = TextEditingController();
+  final passwordController = TextEditingController();
+  var myContext = null;
+  void testCallback(BensBucks api, Map callbackData) {
+    if (callbackData["type"] == BensBucksRequestType.login) {
+      if (callbackData["error"] == BensBucksError.noError) {
+        print("Login successful");
+        Navigator.push<void>(
+          myContext,
+          MaterialPageRoute<void>(
+            builder: (BuildContext myContext) => PlanDetail(),
+          ),
+        );
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    userNameController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    myContext = context;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -33,6 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5),
                   child: TextField(
+                    controller: userNameController,
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black, width: 3.0),
@@ -47,6 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5),
                   child: TextField(
+                    controller: passwordController,
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black, width: 3.0),
@@ -63,7 +95,11 @@ class _LoginPageState extends State<LoginPage> {
                   margin: EdgeInsets.symmetric(vertical: 10),
                   child: OutlinedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/Home');
+                      //api.login and if else statement and receive the context
+                      BensBucks api = BensBucks(testCallback);
+                      api.login(
+                          username: userNameController.text.toString(),
+                          password: passwordController.text.toString());
                     },
                     child: Text(
                       'LOG IN',
@@ -129,4 +165,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
